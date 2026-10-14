@@ -19,3 +19,14 @@ yosys -V
 sta -version
 echo $PDK_ROOT $PDK
 ```
+
+## Part A verification log
+
+```sh
+iverilog -g2012 -Wall -s tb_mult -o sim rtl/full_adder.v rtl/mult_array.v tb/tb_mult.v && vvp sim
+```
+
+Result: `PASS: 256 vectors checked, 0 errors`.
+
+The deliberate full-adder fault test and its failing result are recorded in
+`report/error_injection.log`.

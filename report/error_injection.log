@@ -1,0 +1,3 @@
+Injected fault: changed `sum = a ^ b ^ cin` to `sum = a ^ b` in `rtl/full_adder.v`.
+Simulation result: FAIL: 256 vectors checked, 95 errors
+The correct full-adder equation was restored immediately after this test.

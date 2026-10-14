@@ -1,2 +1,6 @@
 # LibreLane run directories are generated and can be recreated.
 pnr/runs/
+
+# Local simulation outputs.
+sim
+mult.vcd
