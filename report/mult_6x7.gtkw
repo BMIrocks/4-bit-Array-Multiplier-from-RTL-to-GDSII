@@ -1,0 +1,17 @@
+[*] GTKWave view for the Part A example: A = 6, B = 7 (P = 42)
+[*] Open from the repository root with:  gtkwave report/mult_6x7.gtkw
+[*] Marker A = edge 1 (2095 ns, inputs captured), marker B = edge 2 (2105 ns, p = 42 captured)
+[dumpfile] "mult.vcd"
+[timestart] 2070000
+[size] 1200 500
+*-6.300000 2090000 2095000 2105000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[signals_width] 160
+@28
+tb_mult.clk
+tb_mult.rst_n
+@24
+tb_mult.a[3:0]
+tb_mult.b[3:0]
+tb_mult.p[7:0]
+[pattern_trace] 1
+[pattern_trace] 0
