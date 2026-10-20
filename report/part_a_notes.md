@@ -43,6 +43,22 @@ In the testbench, A = 6 and B = 7 are applied at 2090 ns (on a falling edge). Th
 into the input register at the rising edge at 2095 ns (edge 1), and the output P changes from 36
 to 42 at the next rising edge, 2105 ns (edge 2). So the latency is 2 clock edges.
 
+### Why P usually shows the previous product in the waveform
+
+When reading the waveform, P most of the time looks like A x (B - 1) instead of A x B, for
+example a = 6, b = 5 next to p = 24. This is not an error; it is the 2-cycle latency.
+
+The testbench holds each input pair for 20 ns (two clock cycles). The pair is captured at the
+first rising edge (5 ns after it is applied) and the product reaches the output register at the
+second rising edge (15 ns after it is applied). So for the first 15 ns of every pair, P still
+holds the product of the previous pair, and because B counts up by one, that looks like
+A x (B - 1). Only in the last 5 ns, between the second rising edge and the next input change, do
+A, B and P on the screen belong to the same multiplication (2105 ns to 2110 ns for 6 x 7).
+
+We checked this on all 239 changes of P in mult.vcd: every value equals A x B of the inputs
+captured at the previous rising edge. The testbench does the same check at the right moment for
+all 256 pairs, and the fault test above shows that it does catch real errors.
+
 `gtkwave report/mult_6x7.gtkw` (run from the repository root after `vvp sim`) opens this part of
 the waveform with clk, rst_n, a, b and p shown in decimal, with marker A on edge 1 and marker B on
 edge 2.

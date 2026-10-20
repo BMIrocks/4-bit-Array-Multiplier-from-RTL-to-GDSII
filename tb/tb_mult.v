@@ -44,7 +44,9 @@ module tb_mult;
 
                 @(posedge clk);
                 @(posedge clk);
-                #1;
+                // check 4 ns after the edge: the netlist flip-flops have a 1 ns delay,
+                // and the inputs only change at the next falling edge (5 ns after)
+                #4;
                 if (p !== expected) begin
                     $display("MISMATCH: a=%0d b=%0d expected=%0d got=%0d", a_value, b_value, expected, p);
                     errors = errors + 1;
