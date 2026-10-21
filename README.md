@@ -53,3 +53,23 @@ Result: `PASS: 256 vectors checked, 0 errors`.
 
 The deliberate full-adder fault test and its failing result are recorded in
 `report/error_injection.log`.
+
+## Part B synthesis commands
+
+Run from the repository root inside the container (`eda bash`):
+
+```sh
+yosys -c synth/synth.tcl
+CELLS=$PDK_ROOT/sky130A/libs.ref/sky130_fd_sc_hd/verilog
+iverilog -g2012 -DFUNCTIONAL -DUNIT_DELAY=#1 -o gls tb/tb_mult.v \
+  $CELLS/primitives.v $CELLS/sky130_fd_sc_hd.v synth/mult_array_netlist.v
+vvp gls
+```
+
+Result: 65 cells, 16 flip-flops, 751.97 µm², netlist simulation
+`PASS: 256 vectors checked, 0 errors`.
+
+The first netlist run failed (239 errors) because the testbench checked P 1 ns after the
+clock edge, the same instant the flip-flop models (1 ns delay) update. The check was moved
+to 4 ns after the edge; RTL simulation, netlist simulation and the fault test were re-run.
+Details in `report/part_b_notes.md`.
