@@ -73,3 +73,16 @@ The first netlist run failed (239 errors) because the testbench checked P 1 ns a
 clock edge, the same instant the flip-flop models (1 ns delay) update. The check was moved
 to 4 ns after the edge; RTL simulation, netlist simulation and the fault test were re-run.
 Details in `report/part_b_notes.md`.
+
+## Part C static timing analysis commands
+
+Run from the repository root inside the container (`eda bash`):
+
+```sh
+sta sta/sta.tcl                 # T = 10 ns: worst slack 7.324 ns
+PERIOD=2.68 sta sta/sta.tcl     # T = Tmin: worst slack 0.004 ns
+sta sta/sta.tcl                 # back to T = 10 ns so the saved report is the 10 ns one
+```
+
+Tmin = 10 - 7.324 = 2.676 ns, Fmax = 373.7 MHz. Critical path: b0 input flip-flop to p6
+output flip-flop, 9 cells. Details in `report/part_c_notes.md`.
