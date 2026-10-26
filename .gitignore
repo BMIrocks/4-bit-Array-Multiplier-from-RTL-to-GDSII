@@ -15,3 +15,6 @@ gls
 report/report.aux
 report/report.log
 report/report.out
+
+# Assignment handout (not part of the submission).
+RTL_to_GDS.pdf
