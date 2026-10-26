@@ -4,3 +4,14 @@ pnr/runs/
 # Local simulation outputs.
 sim
 mult.vcd
+
+# Private assignment work breakdown (not a deliverable).
+pdf_work_breakdown.md
+
+# Gate-level simulation binary.
+gls
+
+# LaTeX build files (report.pdf is built from report.tex).
+report/report.aux
+report/report.log
+report/report.out

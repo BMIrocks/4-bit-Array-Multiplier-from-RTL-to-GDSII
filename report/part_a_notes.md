@@ -30,7 +30,7 @@ out move down to the next row. P = 0010 1010 = 42 = 6 x 7.
 
 ## Block diagram
 
-`report/block_diagram.png` (vector version `block_diagram.svg`) shows every gate: the 8 input
+`report/block_diagram.png` shows every gate: the 8 input
 flip-flops (a3..a0, b3..b0), the 16 AND gates, the 12 full adders FA10 to FA33 with their carry
 chains and diagonal sum connections, and the 8 output flip-flops p7..p0.
 

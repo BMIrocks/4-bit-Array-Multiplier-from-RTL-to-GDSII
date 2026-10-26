@@ -5,7 +5,7 @@
 - Name: Het Selarka
   Roll number: 2024102031
 - Name: Shrenil Patel
-  Roll number: 2024102061
+  Roll number: 2024102066
 
 ## Part 0 setup log
 
@@ -86,3 +86,38 @@ sta sta/sta.tcl                 # back to T = 10 ns so the saved report is the 1
 
 Tmin = 10 - 7.324 = 2.676 ns, Fmax = 373.7 MHz. Critical path: b0 input flip-flop to p6
 output flip-flop, 9 cells. Details in `report/part_c_notes.md`.
+
+## Part D place and route commands
+
+Run inside the container (`eda bash`):
+
+```sh
+cd pnr
+librelane config.json
+```
+
+CLOCK_PERIOD started at 1.2 x Tmin = 3.21 ns, rounded up to 3.5 ns, and was raised by 0.5 ns
+after every run that failed setup timing (worst corner, `timing__setup__ws`):
+
+| Run | Folder | CLOCK_PERIOD (ns) | Setup slack (ns) | DRC | LVS | Result |
+|-----|--------|-------------------|------------------|-----|-----|--------|
+| 1 | RUN_2026-10-26_15-09-20 | 3.5 | -1.617 | 0 | 0 | fail |
+| 2 | RUN_2026-10-26_15-11-17 | 4.0 | -1.107 | 0 | 0 | fail |
+| 3 | RUN_2026-10-26_15-12-54 | 4.5 | -0.638 | 0 | 0 | fail |
+| 4 | RUN_2026-10-26_15-14-31 | 5.0 | -0.106 | 0 | 0 | fail |
+| 5 | RUN_2026-10-26_15-15-59 | 5.5 | 0.120 | 0 | 0 | pass |
+
+```sh
+cp runs/RUN_2026-10-26_15-15-59/final/metrics.json .
+cp runs/RUN_2026-10-26_15-15-59/final/gds/mult_array.gds .
+```
+
+Layout viewing (outside the container; `layout` is a small wrapper that runs KLayout from
+the same image with the SKY130 layer colours):
+
+```sh
+layout pnr/mult_array.gds
+```
+
+Details in `report/part_d_notes.md`.
+
