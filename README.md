@@ -51,8 +51,16 @@ iverilog -g2012 -Wall -s tb_mult -o sim rtl/full_adder.v rtl/mult_array.v tb/tb_
 
 Result: `PASS: 256 vectors checked, 0 errors`.
 
-The deliberate full-adder fault test and its failing result are recorded in
-`report/error_injection.log`.
+Waveform of the 6 x 7 example (A = last digit of Het's roll number + 5 = 6, B = 7):
+
+```sh
+gtkwave report/mult_6x7.gtkw     # opens mult.vcd with markers on the two clock edges
+```
+
+Fault test: `assign sum = a ^ b ^ cin;` in `rtl/full_adder.v` was temporarily changed to
+`assign sum = a ^ b;`, the same simulation command was run again, and the change was undone.
+
+Result: `FAIL: 256 vectors checked, 95 errors` (recorded in `report/error_injection.log`).
 
 ## Part B synthesis commands
 
@@ -121,3 +129,11 @@ layout pnr/mult_array.gds
 
 Details in `report/part_d_notes.md`.
 
+## Report
+
+```sh
+cd report
+pdflatex report.tex && pdflatex report.tex     # builds report/report.pdf
+```
+
+The GTKWave screenshot of the 6 x 7 example is `report/waveform_6x7.png`.

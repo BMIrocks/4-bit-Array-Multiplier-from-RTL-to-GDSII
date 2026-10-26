@@ -39,7 +39,7 @@ Every run was DRC and LVS clean; only setup timing at the slow corner failed. At
 | Core area (µm²) | 17 759.5 (die area 150 x 150 = 22 500) |
 | Cells after synthesis (from Part B) | 65 |
 | Cells after place and route | 340 (`design__instance__count`; plus 1 559 fill and decap cells that are not counted there, 1 899 in total) |
-| Kinds of cells added | tap cells, buffers (clock tree and timing repair), decap cells, fill cells |
+| Kinds of cells added | tap cells, buffers (clock tree, input, output and fanout), decap cells, fill cells |
 | Wirelength (µm) | 2 571 |
 | Setup slack (ns) | 0.120 (worst corner, slow); 2.693 at the typical corner |
 | Post-route Fmax (MHz) | 1000 / (5.5 - 0.120) = 185.9 (worst corner); 1000 / (5.5 - 2.693) = 356.3 (typical corner) |
@@ -78,8 +78,10 @@ because LibreLane uses a different ABC script and excludes some cells (for examp
 | Flip-flops | 16 | dfrtp_1 (9), dfrtp_2 (2), dfrtp_4 (5) | the design itself; some were upsized for timing |
 | Logic gates | 55 | a21o, and3, xnor2, nand2, ... | the design itself |
 | Tap cells | 245 | tapvpwrvgnd_1 | connect the n-well and substrate to VPWR/VGND at regular intervals to prevent latch-up |
-| Clock tree buffers | 4 | clkbuf_16, clkbuf_4 | drive the clock to all 16 flip-flops with low skew |
-| Timing repair / input-output buffers | 20 | buf_1, buf_2, clkbuf_1 | isolate the input and output pins, fix slew and load, speed up slow nets |
+| Clock tree buffers | 4 | clkbuf_16 (root + 2 branches), clkbuf_4 (clock load) | drive the clock to all 16 flip-flops with low skew |
+| Input buffers | 9 | clkbuf_1 (8), buf_1 (1) | one per input pin except clk: a strong, known driver for each input |
+| Output buffers | 8 | buf_2 | one per product bit: a strong driver for each output pin |
+| Fanout buffers | 3 | buf_2 (2), clkbuf_4 (1) | split nets that drive too many gates |
 
 Added on top, not included in the 340:
 
